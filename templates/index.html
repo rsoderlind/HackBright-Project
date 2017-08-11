@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Find CLothing that you want</title>
+
+
+
+</head>
+
+<body>
+* = required
+<br>
+<br>
+<form action="/searchClothing" method="GET">
+
+
+   * Description of clothing item (for example: blue polkadot shirt):<br>  
+  <textarea name="description"rows="5" cols="50">Enter text here...</textarea><br><br>
+
+  * Size of clothing item: <br>
+  <input type="text" name="size" required><br><br>
+
+  Price of clothing item:<br>
+  <input type="text" name="price"><br><br>
+
+  Retailer of clothing item: <br>
+  <input type="text" name="retailer"><br><br>
+
+  Name of clothing item:<br>
+  <input type="text" name="name"><br><br>
+
+  <input type="submit" value="Submit" id="submitBtn">
+</form>
+
+<br><br>
+
+<div id="dataBaseResults"></div>
+
+</body>
+
+</html>
