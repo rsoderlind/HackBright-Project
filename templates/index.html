@@ -2,41 +2,51 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Find CLothing that you want</title>
-
+<title>Find Clothing that you want</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 </head>
 
 <body>
-* = required
+
 <br>
 <br>
-<form action="/searchClothing" method="GET">
 
 
-   * Description of clothing item (for example: blue polkadot shirt):<br>  
-  <textarea name="description"rows="5" cols="50">Enter text here...</textarea><br><br>
+<script>
 
-  * Size of clothing item: <br>
-  <input type="text" name="size" required><br><br>
+$( document ).ready(function() {
+$('#the-basics').on('keyup', function(){
+  console.log('we are running');
+    var searchTerm = $('#the-basics').val();
+    $.get('/searchData?the-basics=' + searchTerm, function(results){
 
-  Price of clothing item:<br>
-  <input type="text" name="price"><br><br>
+      $('#results').html("");
 
-  Retailer of clothing item: <br>
-  <input type="text" name="retailer"><br><br>
+      for (result of results){
+        var result_div = "<div>" + result + "<button name='resultBtn'>Save Search Result</button>" + "</div>";
+        $('#results').append(result_div);
+      }
+      
 
-  Name of clothing item:<br>
-  <input type="text" name="name"><br><br>
-
-  <input type="submit" value="Submit" id="submitBtn">
-</form>
-
-<br><br>
-
-<div id="dataBaseResults"></div>
+    });
+});
+});
+</script>
 
 </body>
 
+
+<form>
+
+  <input id = "the-basics" type="text" placeholder="Search Clothing">
+
+<div id="results">
+
+  </div>
+
+</form>
+
 </html>
+
