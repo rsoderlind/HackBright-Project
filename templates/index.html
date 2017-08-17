@@ -25,15 +25,21 @@ $('#the-basics').on('keyup', function(){
       $('#results').html("");
 
       for (result of results){
-        var result_div = "<div>" + result + "<button name='resultBtn'>Save Search Result</button>" + "</div>";
+        var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'></form></div>";
         $('#results').append(result_div);
       }
       
 
     });
+
+
 });
 });
 </script>
+
+<br><br>
+<a href="/display">See your saved searches</a>
+
 
 </body>
 
@@ -43,6 +49,8 @@ $('#the-basics').on('keyup', function(){
   <input id = "the-basics" type="text" placeholder="Search Clothing">
 
 <div id="results">
+
+
 
   </div>
 

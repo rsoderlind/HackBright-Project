@@ -1,7 +1,7 @@
-from flask import Flask, request, render_template, jsonify
-import requests
+from flask import Flask, request, render_template, jsonify, flash, redirect, session
+import requests, os
 from flask_sqlalchemy import SQLAlchemy
-from model import connect_to_db, db, Product
+from model import connect_to_db, db, Product, User, User_Product
 
 app = Flask(__name__)
 
@@ -17,23 +17,10 @@ def search_clothing():
     """Add a student."""
     
     search_item = request.args.get('myInput')
-   
-    # need to query database
-
-
-
-    #payload = {'fts': description}
-
-    #r = requests.get(url, params = payload)
-
-
-
-    #return render_template("databaseResult.html",
-                           #description=description, size=size, price=price)
 
 @app.route("/searchData")
 def search_data():
-    """Add a student."""
+    """Search Database"""
     
 
     search_term = request.args.get('the-basics')
@@ -41,16 +28,100 @@ def search_data():
     #results = Product.query.filter(Product.name.op('~')('\Y' + search_term + '\y')).all()
 
     new_results = []
-    for result in results[:10]:
-        new_results.append(result.name) 
+    for result in results[:20]:
+        new_results.append({"id": result.product_id, "name": result.name}) 
     #result = Product.query.filter(Product.name.contains(search_term)).first()
+    print new_results
     return jsonify(new_results)
 
 
+@app.route('/register', methods=['GET'])
+def register_form():
+    """Show form for user signup."""
 
+    return render_template("register_form.html")
+
+@app.route('/display', methods=['GET'])
+def display_products():
+    """DIsplay Products Searched For in Database."""
+
+    return render_template("register_form.html")
+
+
+@app.route('/register', methods=['POST'])
+def register_process():
+    """Process registration."""
+
+    # Get form variables
+    email = request.form["email"]
+    password = request.form["password"]
+
+    new_user = User(email=email, password=password)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    flash("User %s added." % email)
+    return redirect("/login")
+
+
+@app.route('/save', methods=['POST'])
+def save_product():
+    """Process registration."""
+
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect('/login')
+    product_id = request.form.get('product_id')
+    new_user_product = User_Product(user_id=user_id, product_id=product_id)
+    db.session.add(new_user_product)
+    db.session.commit()
+
+    return redirect(request.referrer)
+
+
+@app.route('/login', methods=['GET'])
+def login_form():
+    """Show login form."""
+
+    return render_template("login_form.html")
+
+
+@app.route('/login', methods=['POST'])
+def login_process():
+    """Process login."""
+
+    # Get form variables
+    email = request.form["email"]
+    password = request.form["password"]
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        flash("No such user")
+        return redirect("/register")
+
+    if user.password != password:
+        flash("Incorrect password")
+        return redirect("/login")
+
+    session["user_id"] = user.customer_id
+
+    flash("Logged in")
+    return redirect("/")
+
+
+@app.route('/logout')
+def logout():
+    """Log out."""
+
+    del session["user_id"]
+    flash("Logged Out.")
+    return redirect("/")
 
 
 
 if __name__ == "__main__":
     connect_to_db(app)
+    app.config['SECRET_KEY'] = os.environ.get('APP_SECRETKEY')
     app.run(debug=True, host='0.0.0.0')
