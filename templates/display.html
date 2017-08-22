@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Your Searches</title>
+
+
+</head>
+
+<body>
+Hello, {{name}}<br>
+{% for saved_search in saved_searches %}
+    {{saved_search.product.name}}<br>
+    {{saved_search.product.click_url}}<br>
+    {{saved_search.search_term}}<br>
+    <img src ='{{saved_search.product.image}}'><br>
+{% endfor %}
+
+</body>
+
+</html>

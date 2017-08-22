@@ -41,11 +41,18 @@ def register_form():
 
     return render_template("register_form.html")
 
-@app.route('/display', methods=['GET'])
+@app.route('/display')
 def display_products():
-    """DIsplay Products Searched For in Database."""
+    """Display Products Searched For in Database."""
 
-    return render_template("register_form.html")
+    user_id = session['user_id']
+    saved_searches = User_Product.query.filter_by(user_id=user_id).all()
+
+    name = db.session.query(User.name).filter(User.customer_id==user_id).first()[0]
+
+    return render_template("display.html", saved_searches=saved_searches, name=name)
+
+    
 
 
 @app.route('/register', methods=['POST'])
@@ -55,8 +62,8 @@ def register_process():
     # Get form variables
     email = request.form["email"]
     password = request.form["password"]
-
-    new_user = User(email=email, password=password)
+    name = request.form['name']
+    new_user = User(email=email, password=password, name=name)
 
     db.session.add(new_user)
     db.session.commit()
@@ -73,7 +80,8 @@ def save_product():
     if not user_id:
         return redirect('/login')
     product_id = request.form.get('product_id')
-    new_user_product = User_Product(user_id=user_id, product_id=product_id)
+    search_term = request.form.get('search_term')
+    new_user_product = User_Product(user_id=user_id, product_id=product_id, search_term=search_term)
     db.session.add(new_user_product)
     db.session.commit()
 

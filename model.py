@@ -12,6 +12,10 @@ class User(db.Model):
     customer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(60), nullable=False)
     password = db.Column(db.String(20), nullable=False)
+
+    name = db.Column(db.String(60), nullable=False)
+
+
     
 
 
@@ -37,13 +41,18 @@ class User_Product(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.customer_id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('products.product_id'), nullable=False)
+    search_term = db.Column(db.String(500), nullable=False)
 
     # Define relationship to Product
     product = db.relationship("Product",
                            backref=db.backref("users_products", order_by=id))
 
-    
         
+    user = db.relationship("User",
+                           backref=db.backref("users_products", order_by=id))
+
+
+
 
 # HELPERS
 def init_app():
