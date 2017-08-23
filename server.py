@@ -32,7 +32,21 @@ def search_data():
         new_results.append({"id": result.product_id, "name": result.name}) 
     #result = Product.query.filter(Product.name.contains(search_term)).first()
     print new_results
-    return jsonify(new_results)
+
+    prev_liked = db.session.query(Product).join(User_Product).filter(User_Product.search_term==search_term).all()
+
+    prev_liked_ids = [product.product_id for product in prev_liked]
+
+    other_products = db.session.query(Product).filter(Product.name.like('%' + search_term + '%'), 
+                    ~ Product.product_id.in_(prev_liked_ids)).all()
+
+    other_results = []
+    for product in other_products[:10]:
+        other_results.append({"id": product.product_id, "name": product.name})
+    
+    final_results = {'other_results': other_results, 'new_results': new_results}
+
+    return jsonify(final_results)
 
 
 @app.route('/register', methods=['GET'])
@@ -45,15 +59,15 @@ def register_form():
 def display_products():
     """Display Products Searched For in Database."""
 
+
+
     user_id = session['user_id']
     
-    #suggestions = User_Product.query.filter(User_Product.product_id==Product.product_id)
-
     saved_searches = User_Product.query.filter_by(user_id=user_id).all()
 
     name = db.session.query(User.name).filter(User.customer_id==user_id).first()[0]
 
-    return render_template("display.html", saved_searches=saved_searches, name=name, suggestions=suggestions)
+    return render_template("display.html", saved_searches=saved_searches, name=name)
 
     
 

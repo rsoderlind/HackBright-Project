@@ -9,12 +9,23 @@ $('#submitBtn').on('click', function(evt){
     var searchTerm = $('#the-basics').val();
     $.get('/searchData?the-basics=' + searchTerm, function(results){
       $('#results').html("");
-      for (result of results){
+      for (result of results['new_results']){
         var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
         $('#results').append(result_div);
       }
+
+      $('#suggestions').html("");
+      for(result of results['other_results']){
+           var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
+        $('#suggestions').append(result_div);
+
+      }
+
+
     });
 });
+
+
 });
 </script>
 <br><br>
@@ -28,5 +39,9 @@ $('#submitBtn').on('click', function(evt){
 <div id="results"></div>
 </form>
 
+<h1>THings we suggest for you</h1>
+<div id="suggestions">
+
+</div>
 
 {% endblock %}
