@@ -46,11 +46,14 @@ def display_products():
     """Display Products Searched For in Database."""
 
     user_id = session['user_id']
+    
+    #suggestions = User_Product.query.filter(User_Product.product_id==Product.product_id)
+
     saved_searches = User_Product.query.filter_by(user_id=user_id).all()
 
     name = db.session.query(User.name).filter(User.customer_id==user_id).first()[0]
 
-    return render_template("display.html", saved_searches=saved_searches, name=name)
+    return render_template("display.html", saved_searches=saved_searches, name=name, suggestions=suggestions)
 
     
 

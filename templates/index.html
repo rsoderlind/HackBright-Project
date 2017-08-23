@@ -1,63 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Find Clothing that you want</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-</head>
-
-<body>
-
-<br>
-<br>
-
-
+{% extends 'navbar.html' %}
+{% block title %}Find Clothing that you want{% endblock %}
+ {% block content %}
 <script>
-
 $( document ).ready(function() {
 $('#submitBtn').on('click', function(evt){
   evt.preventDefault();
   console.log('we are running');
     var searchTerm = $('#the-basics').val();
     $.get('/searchData?the-basics=' + searchTerm, function(results){
-
       $('#results').html("");
-      
-
-
       for (result of results){
         var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
         $('#results').append(result_div);
       }
-      
-
     });
-
-
 });
 });
 </script>
-
 <br><br>
-
+{% if session['user_id'] %}
 <a href="/display"><button type='button'>See your saved searches</button></a>
-
-
-
+{% endif %}
 
 <form>
-
   <input id = "the-basics" type="text" placeholder="Search Clothing">
   <input type='submit' id='submitBtn'>
-<div id="results">
-
-
-
-  </div>
-
+<div id="results"></div>
 </form>
-</body>
-</html>
 
+
+{% endblock %}

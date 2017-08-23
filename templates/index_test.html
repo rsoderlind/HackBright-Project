@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Exercise</title>
+    <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="bootstrap-styles.css">
+
+</head>
+
+<body>
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Ubermelon</a>
+            </div>
+            <div id="navbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Shop</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Favorite Melons</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- It's container-fluid so it spans the whole page. -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <section class="col-xs-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" id="splash">
+                <img src="melon.jpg" class="img-responsive center-block" alt="Image of melon" id="hero">
+                <p>We deliver only the highest quality domestic and exotic melons from local, independent farmers from around the world. Our melons are delivered quickly with the greatest care. We guarantee every order, every time.<p>
+            </section>
+        </div>
+        <!-- End of centered main text. -->
+
+        <!-- Row for features columns. -->          
+        <div class="row" id="featurerow">
+            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <b>Award Winning</b>
+                <p>
+                    Don't take our word for it. See all the awards our melons have earned.
+                </p>
+            </section>
+
+            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                <b>Huge Selection</b>
+                <p>
+                We import melons from all over the world, ensuring 
+                we have every melon you could possibly desire.
+                </p>
+            </section>
+
+            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+                <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                <b>Certified Sustainable</b>
+                <p>
+                    Our melons are sourced only from sustainable, organic
+                    local farmers. These are the healthiest melons you'll ever eat.
+                </p>
+            </section>
+
+        </div>
+        <!-- End of three feature columns. -->
+
+        <!-- Row for table. -->
+        <div class="row" id="tablerow">
+
+            <section class="col-xs-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 hidden-xs hidden-sm">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>Melon</th>
+                        <th>Price</th>
+                        <th>Color</th>
+                        <th>Country</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>Canteloupe</td>
+                        <td>$4.99/lb</td>
+                        <td>Tan</td>
+                        <td>Italy</td>
+                    </tr>
+                    <tr>
+                        <td>Honeydew</td>
+                        <td>$3.99/lb</td>
+                        <td>White/Green</td>
+                        <td>France/Algeria</td>
+                    </tr>
+                    <tr>
+                        <td>Casaba</td>
+                        <td>$7.99/lb</td>
+                        <td>Yellow</td>
+                        <td>Turkey</td>
+                    </tr>
+                </table>
+            </section>
+
+        </div> 
+        <!-- End of table row. -->
+
+    </div>
+
+
+<!-- You need this in order to use JS-based components in the 
+further study. Leave this at the bottom and code above it. -->
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

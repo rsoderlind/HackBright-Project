@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Your Searches</title>
+{% extends 'navbar.html' %}
+{% block title %}Your Searches{% endblock %}
+ 
 
-
-</head>
-
-<body>
+{% block content %}
 Hello, {{name}}<br>
 {% for saved_search in saved_searches %}
     {{saved_search.product.name}}<br>
@@ -16,6 +11,4 @@ Hello, {{name}}<br>
     <img src ='{{saved_search.product.image}}'><br>
 {% endfor %}
 
-</body>
-
-</html>
+{% endblock %}
