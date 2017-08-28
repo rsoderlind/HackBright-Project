@@ -9,7 +9,41 @@ app = Flask(__name__)
 def index():
     """Return homepage."""
 
-    return render_template("index.html")
+    image_results = db.session.query(Product).filter(Product.image != "").limit(10).all()
+    id_results =   db.session.query(Product).filter(Product.product_id != 0).limit(10).all()  
+    #new_image_results = []
+
+    #for image in image_results[:10]:
+     #   new_image_results.append({'image': image.image})
+    
+    return render_template("index.html", image_results=image_results, id_results=id_results)
+
+
+@app.route('/seeNextTen')
+def see_next_ten():
+    """See Next Ten image items."""
+
+    if 'button_click' in session:
+        next_ten = session['button_click'] * 7
+    else:
+        next_ten = 0
+
+    if 'button_click' not in session:
+        session['button_click'] = 1
+    else:
+        session['button_click'] += 1
+
+
+    image_results = db.session.query(Product).filter(Product.image != "").limit(7).offset(next_ten).all()
+      
+    new_image_results = []
+
+    for image in image_results[:7]:
+        new_image_results.append({'image': image.image})
+    
+    final_results = {'new_image_results': new_image_results}
+
+    return jsonify(final_results)
 
 
 @app.route("/searchClothing")
@@ -21,17 +55,22 @@ def search_clothing():
 @app.route("/searchData")
 def search_data():
     """Search Database"""
-    
+    search_term = request.args.get('searchClothing')
 
-    search_term = request.args.get('the-basics')
     results = Product.query.filter(Product.name.like('%' + search_term + '%')).all()
     #results = Product.query.filter(Product.name.op('~')('\Y' + search_term + '\y')).all()
 
+    #image_results = db.session.query(Product).filter(Product.image != "").all()    
+    #new_image_results = []
+
+    #for image in image_results[:10]:
+     #   new_image_results.append({'image': image.image})
+
     new_results = []
     for result in results[:20]:
-        new_results.append({"id": result.product_id, "name": result.name}) 
+        new_results.append({"id": result.product_id, "name": result.name, "image": result.image}) 
     #result = Product.query.filter(Product.name.contains(search_term)).first()
-    print new_results
+    #print new_results
 
     prev_liked = db.session.query(Product).join(User_Product).filter(User_Product.search_term==search_term).all()
 
@@ -44,6 +83,7 @@ def search_data():
     for product in other_products[:10]:
         other_results.append({"id": product.product_id, "name": product.name})
     
+    #final_results = {'other_results': other_results, 'new_results': new_results, 'new_image_results': new_image_results}
     final_results = {'other_results': other_results, 'new_results': new_results}
 
     return jsonify(final_results)
@@ -58,8 +98,6 @@ def register_form():
 @app.route('/display')
 def display_products():
     """Display Products Searched For in Database."""
-
-
 
     user_id = session['user_id']
     

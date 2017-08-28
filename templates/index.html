@@ -1,16 +1,55 @@
 {% extends 'navbar.html' %}
 {% block title %}Find Clothing that you want{% endblock %}
  {% block content %}
+
+<div class="container">
+
+<!-- <br><br>
+{% if session['user_id'] %}
+<a href="/display"><button type='button'>See your saved searches</button></a>
+{% endif %}
+
+<form>
+  <input id = "the-basics" type="text" placeholder="Search Clothing">
+  <input type='submit' id='submitBtn'>
+<div id="results" class="row"></div>
+</form> -->
+<!-- <div id="myOwnCarousel" class="transition">
+      {% for image_result in image_results %}
+      <img src="{{image_result.image}}">
+    {% endfor %}
+    
+
+</div> -->
+
+<div id="myOwnCarousel" class="transition">
+
+</div>
+<br>
+<button id="seeNextTen">Move</button>
+<br>
+<h1>Things we suggest for you</h1>
+<div id="suggestions">
+
+</div>
+
+
+
+<a href="/display">See Saved results</a>
+<h1>Results</h1>
+<div id="results"></div>
+</div>
+
 <script>
 $( document ).ready(function() {
-$('#submitBtn').on('click', function(evt){
+$('#searchButton').on('click', function(evt){
   evt.preventDefault();
-  console.log('we are running');
-    var searchTerm = $('#the-basics').val();
-    $.get('/searchData?the-basics=' + searchTerm, function(results){
+  console.log("we are running");
+    var searchTerm = $('#searchClothing').val();
+    $.get('/searchData?searchClothing=' + searchTerm, function(results){
       $('#results').html("");
       for (result of results['new_results']){
-        var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
+        var result_div = "<div class='col-md-4 resultBoxhl'><form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form>" + result.name + "<img src='" + result.image + "'></div>";
         $('#results').append(result_div);
       }
 
@@ -22,26 +61,42 @@ $('#submitBtn').on('click', function(evt){
       }
 
 
-    });
-});
+}) //end of .get
+});//end of searchButton on click
 
 
-});
+
+
+
+$('#seeNextTen').on('click', function(evt){
+  evt.preventDefault();
+  console.log("we are running");
+    //var searchTerm = $('#searchClothing').val();
+    $.get('/seeNextTen', function(results){
+
+      $('#myOwnCarousel').html("");
+      for(result of results['new_image_results']){
+           var result_image = "<img src='" + result.image + "'>";
+        $('#myOwnCarousel').append(result_image);
+
+      }
+
+
+}) //end of .get
+  $("#myOwnCarousel").css('left', 150);
+
+  $( "#myOwnCarousel" ).animate({
+    left: "+=300"
+  }, 1000, function() {
+    // Animation complete.
+  });
+
+});//end of seeNextTen on click
+
+
+
+
+});//end of document ready
+
 </script>
-<br><br>
-{% if session['user_id'] %}
-<a href="/display"><button type='button'>See your saved searches</button></a>
-{% endif %}
-
-<form>
-  <input id = "the-basics" type="text" placeholder="Search Clothing">
-  <input type='submit' id='submitBtn'>
-<div id="results"></div>
-</form>
-
-<h1>THings we suggest for you</h1>
-<div id="suggestions">
-
-</div>
-
 {% endblock %}
