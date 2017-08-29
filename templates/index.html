@@ -2,7 +2,7 @@
 {% block title %}Find Clothing that you want{% endblock %}
  {% block content %}
 
-<div class="container">
+<div class="container-fluid">
 
 <!-- <br><br>
 {% if session['user_id'] %}
@@ -21,10 +21,18 @@
     
 
 </div> -->
-
-<div id="myOwnCarousel" class="transition">
+ <div class="row-fluid" id="imageResult">
+<div id="myOwnCarousel">
 
 </div>
+</div>
+
+</div>
+<div class="container-fluid" id="div_body">
+ <div class="row-fluid">
+<div class="col-md-12 resultBoxhl">
+
+
 <br>
 <button id="seeNextTen">Move</button>
 <br>
@@ -38,21 +46,52 @@
 <a href="/display">See Saved results</a>
 <h1>Results</h1>
 <div id="results"></div>
+
+</div><!-- end of div_body -->
+
 </div>
+
+</div><!-- end of container -->
 
 <script>
 $( document ).ready(function() {
+
+
+
 $('#searchButton').on('click', function(evt){
   evt.preventDefault();
   console.log("we are running");
     var searchTerm = $('#searchClothing').val();
+    console.log(searchTerm);
     $.get('/searchData?searchClothing=' + searchTerm, function(results){
       $('#results').html("");
-      for (result of results['new_results']){
+   /*for (result of results['new_results']){
         var result_div = "<div class='col-md-4 resultBoxhl'><form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form>" + result.name + "<img src='" + result.image + "'></div>";
+        $('#results').append(result_div);
+      }*/
+
+      for (result of results['new_results']){
+        
+        var result_div = "<div class='col-md-4 resultBoxhl'><img src='" + result.image + "' class='resultImg' data-result-id='" + result.id +  "' data-search-term='" + searchTerm + "'></div>";
         $('#results').append(result_div);
       }
 
+        $(".resultImg").click(function(evt){
+
+    var resultId = $(this).data("resultId");
+    var searchTerm = $(this).data("searchTerm");
+    var formData = {'result_id': resultId, 'search_term': searchTerm};
+
+    $.post("/save", formData, function(results){
+
+        //ui
+
+    });
+
+
+  });
+
+        
       $('#suggestions').html("");
       for(result of results['other_results']){
            var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
@@ -77,23 +116,20 @@ $('#seeNextTen').on('click', function(evt){
       $('#myOwnCarousel').html("");
       for(result of results['new_image_results']){
            var result_image = "<img src='" + result.image + "'>";
-        $('#myOwnCarousel').append(result_image);
-
+        $('#myOwnCarousel').append(result_image);       
       }
 
 
 }) //end of .get
-  $("#myOwnCarousel").css('left', 150);
+    $("#myOwnCarousel").css("margin-left","0px");
 
-  $( "#myOwnCarousel" ).animate({
-    left: "+=300"
-  }, 1000, function() {
-    // Animation complete.
-  });
+    $("#myOwnCarousel").animate({ 
+        marginLeft: "+=150px",
+    }, 1000 );
 
 });//end of seeNextTen on click
 
-
+$("#seeNextTen").click();
 
 
 });//end of document ready

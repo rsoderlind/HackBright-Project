@@ -134,7 +134,7 @@ def save_product():
     user_id = session.get('user_id')
     if not user_id:
         return redirect('/login')
-    product_id = request.form.get('product_id')
+    product_id = request.form.get('result_id')
     search_term = request.form.get('search_term')
     new_user_product = User_Product(user_id=user_id, product_id=product_id, search_term=search_term)
     db.session.add(new_user_product)
