@@ -1,10 +1,27 @@
 
 $( document ).ready(function() {
+
+  $(document).on("click", ".small_border", function(evt){
+
+    var name = $(this).data("resultName");
+    var image = $(this).data("resultImage");
+
+    $("#modalBody").html("<img src='" + image + "'>");
+
+    $("#myModalLabel").html(name);
+
+    $("#bigModal").modal("show");
+
+  });
+
+
+
+
     $.get('/getBestItems', function(results){
 
       $('#bestItems').html("");
       for(result of results['new_results']){
-           var result_image = "<div class='col-md-3 resultBoxhl'><img src='" + result.image + "' class='border' height='200' width='200'></div>";
+           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='100' height='100' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></div>";
         $('#bestItems').append(result_image);       
       }
 
@@ -25,7 +42,7 @@ $('#searchButton').on('click', function(evt){
       }*/
 
       for (result of results['new_results']){
-        var result_div = "<div class='col-md-3 resultBoxhl'><img src='" + result.image + "' class='border' data-result-id='" + result.id +  "' data-search-term='" + searchTerm + "'></div>";
+        var result_div = "<div class='col-md-2 resultBoxhl'><img src='" + result.image + "' class='resultImg border' id='photo-" + result.id + "' data-result-id='" + result.id +  "' data-search-term='" + searchTerm + "'></div>";
         $('#results').append(result_div);
       }
 
@@ -34,17 +51,27 @@ $('#searchButton').on('click', function(evt){
     var resultId = $(this).data("resultId");
     var searchTerm = $(this).data("searchTerm");
     var formData = {'result_id': resultId, 'search_term': searchTerm};
+    $(this).css('border', 'solid 8px green');
 
     $.post("/save", formData, function(results){
 
       //document.location.href = '/display';        
-        $('.resultImg').click(function() {
-        var id = $('img', this).attr('src');
-        //console.log(id);
-        $(this).attr('src', '../static/green-check-mark.svg');
-        });
+        //$("#photo-" + formData.result_id).click(function() {
+        //$("#" + formData.result_id).show();
+         //$("#" + formData.result_id).css("zindex","200");
 
-    });
+        //var id = $('img', this).attr('src');
+        //console.log(id);
+        //$(this).attr('src', '../static/green-check-mark.svg');
+       
+            
+        
+        
+
+//        });
+
+
+    });//end of post to save route
 
 
   });

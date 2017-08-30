@@ -55,10 +55,15 @@ def search_clothing():
 
 @app.route("/getBestItems")
 def get_best_items():    
-    results = Product.query.filter(Product.name.like('%' + 'top' + '%')).all()
+
+    search_list = ["top", "skirt", "shoes", "pants", "blouse", "sneaker", "earrings", "jeans", "blazer", "jacket"]
     new_results = []
-    for result in results[:13]:
-        new_results.append({"id": result.product_id, "name": result.name, "image": result.image})
+
+    for search_list_item in search_list:
+        results = Product.query.filter(Product.name.like('%' + search_list_item + '%')).all()
+
+        for result in results[:100]:
+            new_results.append({"id": result.product_id, "name": result.name, "image": result.image})
 
     final_results = {'new_results': new_results}
 

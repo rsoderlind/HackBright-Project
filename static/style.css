@@ -4,6 +4,10 @@
   
 }
 
+.resultImg{
+
+  position:absolute;
+}
 #myOwnCarousel{
 
     background-color: white;
@@ -13,7 +17,7 @@
     padding: 0px;
 }
 
-body, html {  background-color: lightblue}
+body, html {  background-color: white}
 
 
 .imageResult{
@@ -40,7 +44,7 @@ padding: 0;
   background-color: white;
 }
 
-.border{
+.small_border{
 border-width: 2px;   border-color: gray;   border-style: solid;
 background-color: white;
 }
