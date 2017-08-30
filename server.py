@@ -24,7 +24,7 @@ def see_next_ten():
     """See Next Ten image items."""
 
     if 'button_click' in session:
-        next_ten = session['button_click'] * 7
+        next_ten = session['button_click'] * 6
     else:
         next_ten = 0
 
@@ -34,7 +34,7 @@ def see_next_ten():
         session['button_click'] += 1
 
 
-    image_results = db.session.query(Product).filter(Product.image != "").limit(7).offset(next_ten).all()
+    image_results = db.session.query(Product).filter(Product.image != "").limit(6).offset(next_ten).all()
       
     new_image_results = []
 
@@ -51,6 +51,19 @@ def search_clothing():
     """Add a student."""
     
     search_item = request.args.get('myInput')
+
+
+@app.route("/getBestItems")
+def get_best_items():    
+    results = Product.query.filter(Product.name.like('%' + 'top' + '%')).all()
+    new_results = []
+    for result in results[:13]:
+        new_results.append({"id": result.product_id, "name": result.name, "image": result.image})
+
+    final_results = {'new_results': new_results}
+
+    return jsonify(final_results)
+
 
 @app.route("/searchData")
 def search_data():
@@ -141,6 +154,18 @@ def save_product():
     db.session.commit()
 
     return redirect(request.referrer)
+
+
+@app.route('/displayModal', methods=['POST'])
+def display_modal():
+    """Process registration."""
+
+    product_description = request.form.get('product_description')
+    product_name = request.form.get('product_name')
+    product_clickurl = request.form.get('product_clickurl')
+
+    return redirect(request.referrer)
+
 
 
 @app.route('/login', methods=['GET'])

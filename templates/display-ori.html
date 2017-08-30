@@ -1,0 +1,26 @@
+{% extends 'navbar.html' %}
+{% block title %}Your Searches{% endblock %}
+ 
+
+{% block content %}
+<h1>Hello, {{name}}</h1><br>
+{% for saved_search in saved_searches %}
+<div class="container-fluid" id="imageResult">
+<div class="row-fluid">
+    <div class='col-md-3 resultBoxhl'>
+    {{saved_search.product.name}}
+    </div>
+    <div class='col-md-3 resultBoxhl'>
+    {{saved_search.product.click_url}}
+    </div>
+    <div class='col-md-3 resultBoxhl'>
+    {{saved_search.search_term}}
+    </div>
+    <div class='col-md-3 resultBoxhl'>
+    <img src ='{{saved_search.product.image}}'>
+</div>
+</div>
+</div>
+{% endfor %}
+
+{% endblock %}
