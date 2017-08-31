@@ -99,7 +99,7 @@ def search_data():
 
     other_results = []
     for product in other_products[:10]:
-        other_results.append({"id": product.product_id, "name": product.name})
+        other_results.append({"id": product.product_id, "name": product.name, "image": product.image})
     
     #final_results = {'other_results': other_results, 'new_results': new_results, 'new_image_results': new_image_results}
     final_results = {'other_results': other_results, 'new_results': new_results}

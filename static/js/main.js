@@ -21,7 +21,7 @@ $( document ).ready(function() {
 
       $('#bestItems').html("");
       for(result of results['new_results']){
-           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='100' height='100' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></div>";
+           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='95' height='95' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></div>";
         $('#bestItems').append(result_image);       
       }
 
@@ -77,12 +77,14 @@ $('#searchButton').on('click', function(evt){
   });
 
 
-      $('#bestItems').html("");
-      /*for(result of results['other_results']){
-           var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
-        $('#bestItems').append(result_div);
+      
 
-      }*/
+      $('#suggestions').html("");
+      for(result of results['other_results']){
+           var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
+        $('#suggestions').append(result_div);
+
+      }
 
 
 }) //end of .get
