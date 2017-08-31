@@ -35,6 +35,14 @@ body, html {  background-color: white}
    height:210px;
 }
 
+.resultImg{
+
+margin-bottom: 10px;
+}
+
+.border{
+  border: 2px solid gray;
+}
 .btnClothes{
 
 border: 0;

@@ -81,10 +81,21 @@ $('#searchButton').on('click', function(evt){
 
       $('#suggestions').html("");
       for(result of results['other_results']){
-           var result_div = "<div>" + result.name + "<form action='/save' method='post'><input name='product_id' type='hidden' value="+ result.id +"><input type='submit' value='Save Search Results'><input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>";
-        $('#suggestions').append(result_div);
+
+           /*<form action='/save' method='post'>
+
+           <input name='product_id' type='hidden' value="+ result.id +">
+
+           <input type='submit' value='Save Search Results'>
+
+           <input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>*/
+            var result_div = "<li><a href='#'><img src='" + result.image + "' class='small_border' width='50px' height='50px' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></li>";
+            $('#suggestions').append(result_div);
 
       }
+
+
+
 
 
 }) //end of .get
