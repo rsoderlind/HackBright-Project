@@ -7,7 +7,8 @@
 .blueResultsLink{
 
   font-size: 24px;
-  font-color: blue;
+  color: DarkGrey;
+
 }
 
 #myOwnCarousel{
@@ -35,6 +36,10 @@ body, html {  background-color: white}
    height:210px;
 }
 
+.greenLayer{
+    background-color: rgba(248, 247, 216, 0.7);
+
+}
 .resultImg{
 
 margin-bottom: 10px;

@@ -1,12 +1,35 @@
 
 $( document ).ready(function() {
 
+function saveGreen(self){
+
+    var resultId = self.data("resultId");
+    var searchTerm = self.data("searchTerm");
+    var formData = {'result_id': resultId, 'search_term': searchTerm};
+    
+    self.css('border', 'solid 8px green');
+
+    $.post("/save", formData, function(results){
+
+  });
+}
+
+
   $(document).on("click", ".small_border", function(evt){
 
     var name = $(this).data("resultName");
     var image = $(this).data("resultImage");
+    var id = $(this).data("resultId");
+     var searchTerm = $('#searchClothing').val();
 
-    $("#modalBody").html("<img src='" + image + "'>");
+    $("#modalBody").html("<img src='" + image + "' class='modalSmallImg' data-result-id='" + id + "' data-search-term='" + searchTerm + "'>");
+
+    $(".modalSmallImg").click(function(){
+
+          var self = $(this);
+          saveGreen(self);
+
+    });
 
     $("#myModalLabel").html(name);
 
@@ -46,33 +69,10 @@ $('#searchButton').on('click', function(evt){
         $('#results').append(result_div);
       }
 
-        $(".resultImg").click(function(evt){
+        $(".resultImg").click(function(){
 
-    var resultId = $(this).data("resultId");
-    var searchTerm = $(this).data("searchTerm");
-    var formData = {'result_id': resultId, 'search_term': searchTerm};
-    $(this).css('border', 'solid 8px green');
-
-    $.post("/save", formData, function(results){
-
-      //document.location.href = '/display';        
-        //$("#photo-" + formData.result_id).click(function() {
-        //$("#" + formData.result_id).show();
-         //$("#" + formData.result_id).css("zindex","200");
-
-        //var id = $('img', this).attr('src');
-        //console.log(id);
-        //$(this).attr('src', '../static/green-check-mark.svg');
-       
-            
-        
-        
-
-//        });
-
-
-    });//end of post to save route
-
+          var self = $(this);
+          saveGreen(self);
 
   });
 
@@ -82,16 +82,18 @@ $('#searchButton').on('click', function(evt){
       $('#suggestions').html("");
       for(result of results['other_results']){
 
-           /*<form action='/save' method='post'>
+           // <form action='/save' method='post'>
 
-           <input name='product_id' type='hidden' value="+ result.id +">
+           // <input name='product_id' type='hidden' value="+ result.id +">
 
-           <input type='submit' value='Save Search Results'>
+           // <input type='submit' value='Save Search Results'>
 
-           <input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>*/
-            var result_div = "<li><a href='#'><img src='" + result.image + "' class='small_border' width='50px' height='50px' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></li>";
+           // <input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>
+
+           var image = "<a href='#'><img src='" + result.image + "' class='small_border' width='50px' height='50px' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a>"
+            var result_div = "<li>" + image + "</li>";
             $('#suggestions').append(result_div);
-
+  
       }
 
 
@@ -132,5 +134,3 @@ $('#seeNextTen').on('click', function(evt){
 $("#seeNextTen").click();
 
 });//end of document ready
-
-
