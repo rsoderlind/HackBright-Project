@@ -5,9 +5,12 @@ function saveGreen(self){
 
     var resultId = self.data("resultId");
     var searchTerm = self.data("searchTerm");
+    
     var formData = {'result_id': resultId, 'search_term': searchTerm};
     
     self.css('border', 'solid 8px green');
+    //glyphicon-ok
+    $("#" + "check-" + resultId).css('visibility', 'visible');
 
     $.post("/save", formData, function(results){
 
@@ -22,7 +25,7 @@ function saveGreen(self){
     var id = $(this).data("resultId");
      var searchTerm = $('#searchClothing').val();
 
-    $("#modalBody").html("<img src='" + image + "' class='modalSmallImg' data-result-id='" + id + "' data-search-term='" + searchTerm + "'>");
+    $("#modalBody").html("<img src='" + image + "' class='modalSmallImg' data-result-id='" + id + "' data-search-term='" + searchTerm + "'></div>");
 
     $(".modalSmallImg").click(function(){
 
@@ -44,7 +47,7 @@ function saveGreen(self){
 
       $('#bestItems').html("");
       for(result of results['new_results']){
-           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='95' height='95' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a></div>";
+           var result_image = "<div class='col-md-1 resultBoxhl video-thumbnail'><i class='glyphicon glyphicon-ok' id='check-" + result.id + "'></i><img src='" + result.image + "' class='small_border' width='95' height='95' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a></div>";
         $('#bestItems').append(result_image);       
       }
 
@@ -65,7 +68,7 @@ $('#searchButton').on('click', function(evt){
       }*/
 
       for (result of results['new_results']){
-        var result_div = "<div class='col-md-2 resultBoxhl'><img src='" + result.image + "' class='resultImg border' id='photo-" + result.id + "' data-result-id='" + result.id +  "' data-search-term='" + searchTerm + "'></div>";
+        var result_div = "<div class='col-md-2 resultBoxhl video-thumbnail'><i class='glyphicon glyphicon-ok' id='check-" + result.id + "'></i><img src='" + result.image + "' class='resultImg border' id='photo-" + result.id + "' data-result-id='" + result.id +  "' data-search-term='" + searchTerm + "'></div>";
         $('#results').append(result_div);
       }
 
@@ -90,8 +93,8 @@ $('#searchButton').on('click', function(evt){
 
            // <input type='hidden' name='search_term' id='search_term' value='" + searchTerm + "'></form></div>
 
-           var image = "<a href='#'><img src='" + result.image + "' class='small_border' width='50px' height='50px' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a>"
-            var result_div = "<li>" + image + "</li>";
+           var image = "<a href='#'><img src='" + result.image + "' class='small_border' width='50px' height='50px' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a>";
+           var result_div = "<li>" + image + "</li>";
             $('#suggestions').append(result_div);
   
       }
