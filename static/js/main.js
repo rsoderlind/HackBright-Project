@@ -44,7 +44,7 @@ function saveGreen(self){
 
       $('#bestItems').html("");
       for(result of results['new_results']){
-           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='95' height='95' data-result-image='" + result.image + "' data-result-name='" + result.name + "'></a></div>";
+           var result_image = "<div class='col-md-1 resultBoxhl'><img src='" + result.image + "' class='small_border' width='95' height='95' data-result-image='" + result.image + "' data-result-name='" + result.name + "' data-result-id='" + result.id + "'></a></div>";
         $('#bestItems').append(result_image);       
       }
 
